@@ -81,3 +81,76 @@ File "<stdin>", line 1, in <module>
 ValueError: substring not found
 ```
 문자열 중 문자 t가 맨 처음으로 나온 위치를 반환한다. 만약 찾는 문자나 문자열이 존재하지 않는다면 오류를 발생시킨다. 앞의 find함수와 다른 점은 문자열 안에 존재하지 않는 문자를 찾으면 오류가 발생한다는 점이다.
+
+#### 문자열 삽입(join)
+```python
+>>> ",".join('abcd')
+'a,b,c,d'
+```
+abcd 문자열의 각각의 문자 사이에 ','을 삽입한다.  
+
+join 함수는 문자열뿐만 아니라 앞으로 배울 리스트나 튜플도 입력으로 사용할 수 있다. join함수의 입력으로 리스트를 사용하는 예는 다음과 같다.
+```python
+>>> ",".join(['a', 'b', 'c', 'd'])
+'a,b,c,d'
+```
+
+#### 소문자를 대문자로 바꾸기(upper)
+```python
+>>> a = "hi"
+>>> a.upper()
+'HI'
+```
+upper 함수는 소문자를 대문자로 바꾸어 준다. 만약 문자열이 이미 대문자라면 아무 변화도 일어니 않을 것이다.
+
+#### 대문자를 소문자로 바꾸기(lower)
+```python
+>>> a = "HI"
+>>> a.lower()
+'hi'
+```
+lower함수는 대문자를 소문자로 바꾸어 준다.
+
+#### 왼쪽 공백 지우기(lstrip)
+```python
+>>> a = " hi "
+>>> a.lstrip()
+'hi '
+```
+문자열중 가장 왼쪽에 있는 한 칸 이상의 연속된 공백들을 모두 지운다. lstrip에서 l은 left
+
+#### 오른쪽 공백 지우기(rstrip)
+```python
+>>> a= " hi "
+>>> a.rstrip()
+' hi'
+```
+문자열 중 가장 오른쪽에 있는 한 칸 이상의 연속된 공백을 모두 지운다. rstrip에서 r은 right
+
+#### 양쪽 공백지우기(strip)
+```python
+>>> a = " hi "
+>>> a.strip()
+'hi'
+```
+문자열 양쪽에 있는 한 칸 이상의 연속된 공백을 모두 지운다.
+
+#### 문자열 바꾸기(replace)
+```python
+>>> a = "Life is too short"
+>>> a.replace("Life", "Your leg")
+'Your leg is too short'
+```
+replace(바뀌게될 문자열, 바꿀 문자열)처럼 사용해서 문자열 안의 특정한 값을 다른 값으로 치환해 준다.
+
+#### 문자열 나누기(split)
+```python
+>>> a = "Life is too short"
+>>> a.split()
+['Life', 'is', 'too', 'short']
+>>> b = "a:b:c:d"
+>>> b.split(':')
+['a', 'b', 'c', 'd']
+```
+split 함수는 a.split()처럼 괄호 안에 아무 값도 넣어 주지 않으면 공백(스페이스,탭,엔터)을 기준으로 문자열을 나누어 준다.
+만약 b.split(':')처럼 괄호 안에 특정 값이 있을 경우에는 괄호 안의 값을 구분자로 해서 문자열을 나누어 준다. 이렇게 나눈 값은 리스트에 하나씩 들어가게 된다. 
