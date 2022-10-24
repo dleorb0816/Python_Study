@@ -1,6 +1,6 @@
 ## 문자열 자료형  
 
-### 문자열 이란?  
+
 ### 문자열이란?  
 문자열(String)이란 문자, 단어 등으로 구성된 문자들의 집합을 의미한다. 예를 들어 다음과 같은 것들이 문자 열이다.
 
@@ -47,3 +47,37 @@ Python's favorite food is perl
 "Pythonn's favorite food is perl"
 ```
 큰따옴표가 아닌 작은 따옴표로 문자열을 둘러싼후 다시 실행해보면 SyntaxError가 발생할 것이다.  
+
+### 문자열 관련 함수들  
+
+문자열 자료형은 자체적으로 함수를 가지고 있다. 이들 함수를 다른 말로 문자열 내장 함수라 한다. 이 내장 함수를 사용하려면 문자열 변수 이름 뒤에 '.'를 쿹인 다음에 함수 이름을 써주면 된다. 이제 문자열의 내장 함수에 대해 알아보자  
+
+#### 문자 개수 세기(count)  
+```python
+>>> a = "hobby"
+>>> a.count('b')
+2
+```
+문자열 중 문자 b의 개수를 리턴
+
+#### 위치 알려주기1(find)
+```python
+>>> a = "Python is the best choice"
+>>> a.find('b')
+14
+>>> a.find('k')
+-1
+```
+문자열 중 문자 b가 처음으로 나온 위치를 반환한다. 만약 찾는 문자나 문자열이 존재하지 않는다면 -1을 반환.
+
+#### 위치 알려주기2(index)
+```python
+>>> a = "Life is too short"
+>>> a.index('t')
+8
+>>> a.index('k')
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+ValueError: substring not found
+```
+문자열 중 문자 t가 맨 처음으로 나온 위치를 반환한다. 만약 찾는 문자나 문자열이 존재하지 않는다면 오류를 발생시킨다. 앞의 find함수와 다른 점은 문자열 안에 존재하지 않는 문자를 찾으면 오류가 발생한다는 점이다.
