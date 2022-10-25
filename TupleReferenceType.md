@@ -24,3 +24,30 @@ t4 = 1, 2, 3처럼 괄호를 생략해도 무방함.
 값이 변경되는 형태의 변수가 훨씬 많기 때문에 평균적으로 튜플보다는 리스트를 더 많이 사용한다.  
 
 ### 튜플의 요소값을 지우거나 변경하려고 하면 어떻게 될까?
+
+앞에서 설명했듯이 튜플의 요솟값은 한 번 정하면 지우간 변겨할수 없다. 다음에 소개하는 두 예를 살펴보면 무슨 말인지 알 수 있을 것이다.  
+
+**1. 튜플 요솟값을 삭제하려 할 때**
+```python
+>>> t1 = (1, 2, 'a', 'b')
+>>> del t1[0]
+```
+```
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'tuple' object doesn't support item deletion
+```
+튜플의 요소를 리스트처럼 del 함수로 지우려고 한 예이다. 튜플은 요소를 지우는 행위가 지원되지 않는다는 메시지를 확인 할수 있다.  
+
+**2. 튜플 요솟값을 변경하려 할 때**  
+```python
+>>> t1 = (1, 2, 'a', 'b')
+>>> t1[0] = 'c'
+```
+```
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'tuple' object does not support item assignment
+```
+튜플의 요솟값을 변경하려고 해도 마찬가지로 오류가 발생하는 것을 확인할 수 있다.
+
