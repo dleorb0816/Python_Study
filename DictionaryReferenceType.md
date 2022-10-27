@@ -150,7 +150,7 @@ TypeError: unhashable type: 'list'
 ```
 따라서 딕셔너리의 Key값으로 딕셔너리를 사용할 수 없음은 당연하다. 단 Value에는 변하는 값이든 변하지 않는 값이든 상관없이 아무 값이나 넣을 수 있다.
 
-### Key리스트 만들기(keys)
+#### Key리스트 만들기(keys)
 ```
 >>> a = {'name': 'pey', 'phone': '0119993323', 'birth': '1118'}
 >>> a.keys()
@@ -166,3 +166,24 @@ name
 phone
 birth
 ```
+dict_keys 객체를 리스트로 변환하려면 다음과 같이 하면 된다.  
+
+```python
+>>> list(a.keys())
+['name', 'phone', 'birth']
+```
+
+#### Value 리스트 만들기(values)
+```python
+>>> a.values()
+dict_values(['pey', '0119993323', '1118'])
+```
+Key를 얻는 것과 마찬가지 방법으로 Value만 얻고 싶다면 values 함수를 사용하면 된다. values 함수를 호출하면 dict_values객체를 돌려준다.  
+
+#### Key, Value 쌍 얻기(items)
+```python
+>>> a.items()
+dict_items([('name', 'pey'), ('phone', '0119993323'), ('birth', '1118')])
+```
+
+items 함수는 Key와 Value의 쌍을 튜플로 묶은 값을 dict_items 객체로 돌려준다. dict_values 객체와 dict_items 객체 역시 dict_keys 객체와 마찬가지로 리스트를 사용하는 것과 동일하게 사용할 수 있다.
