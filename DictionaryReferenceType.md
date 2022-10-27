@@ -149,3 +149,20 @@ Traceback (most recent call last):
 TypeError: unhashable type: 'list'
 ```
 따라서 딕셔너리의 Key값으로 딕셔너리를 사용할 수 없음은 당연하다. 단 Value에는 변하는 값이든 변하지 않는 값이든 상관없이 아무 값이나 넣을 수 있다.
+
+### Key리스트 만들기(keys)
+```
+>>> a = {'name': 'pey', 'phone': '0119993323', 'birth': '1118'}
+>>> a.keys()
+dict_keys(['name', 'phone', 'birth'])
+```
+a.keys()는 딕셔너리 a의 Key만을 모아서 dict_keys 객체를 돌려준다.  
+dict_keys 객체는 다음과 같이 사용할 수 있다. 리스트를 사용하는 것과 차이가 없지만, 리스트 고유의 append,insert,pop, remove,sork 함수는 수행할수 없다.  
+```python
+>>> for k in a.keys():
+...    print(k)
+...
+name
+phone
+birth
+```
