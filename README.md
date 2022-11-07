@@ -9,6 +9,7 @@
 - [6.불 자료형](./BollReferenceType.md)   
 - [7.자료형을 저장하는 공간, 변수](./Variable.md)  
 - [8.if문](./if.md)  
+- [9.while문](./while.md)  
 
   
 
