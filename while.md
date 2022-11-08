@@ -61,3 +61,44 @@ while문 안의 문장을 보면 제일 먼저 ```treeHit = treeHit + 1```로 tr
 ... Enter number: """
 >>>
 ```
+
+이어서 number변수에 0을 먼저 대입한다. 이렇게 변수를 먼저 설정해 놓지 않으면 다음에 나올 while문의 조건문인 ```number != 4```에서  
+변수가 존재하지 않는다는 오류가 발생한다.  
+
+```python
+>>> number = 0
+>>> while number != 4:
+...     print(prompt)
+...     number = int(input())
+...
+
+1. Add
+2. Del
+3. List
+4. Quit
+
+Enter number:
+```
+
+while문을 보면 number가 4가 아닌동안 prompt를 출력하고 사용자로부터 번호를 입력받는다. 다음결과 화면처럼 사용자가 값 4를  
+입력하지 않으면 계속해서 prompt를 출력한다
+
+> 여기에서 number = int(input())는 사용자의 숫자 입력을 받아들이는 것이라고만 알아두자. int나 input함수에 대한 내용은
+> 뒤의 내장 함수 부분에서 자세하게 다룬다.
+
+```python
+Enter number:
+1
+
+1. Add
+2. Del
+3. List
+4. Quit
+```
+
+4를 입력하면 조건문이 거짓이 되어 while문을 빠져나가게 된다.  
+```python
+Enter number:
+4
+>>>
+```
