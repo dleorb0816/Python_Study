@@ -11,8 +11,9 @@
 - [8.if문](./if.md)  
 - [9.while문](./while.md)  
 - [10.for문](./for.md)  
-
+- [11.함수](./function.md)  
   
+
 
 
 
