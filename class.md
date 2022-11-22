@@ -244,4 +244,29 @@ self는 특별한 의미를 가진다.
 
 그런데 뭔가 좀 이상하지 않은가? setdata메서드에는 self, first,second총 3개의 매개변수가 필요한데 실제로는  
 a.setdata(4,2)처럼 2개만 전달했다. 왜 그럴까? 그 이유는 a.setdata(4,2)처럼 호출하면 setdata메서드의  
-첫 번째 매개변수 self에는 setdata메서드를 호출한 객체 a가 자동으로 전달되기 때문이다.
+첫 번째 매개변수 self에는 setdata메서드를 호출한 객체 a가 자동으로 전달되기 때문이다.  
+
+파이썬 메서드의 첫 번째 매개변수 이름은 관례적으로 self를 사용한다. 객체를 호출할 때 호출한 객체 자신이 전달되기 때문에  
+self를 사용한 것이다. 물론 self말고 다른 이름을 사용해도 상관 없다.  
+> ※ 메서드의 첫 번째 매개변수 self를 명시적으로 구현하는 것은 파이썬만의 독특한 특징이다.
+
+### setdata 메서드의 수행문
+
+이제 setdata 메서드의 수행문에 대해 알아보자.  
+```python
+def setdata(self, first, second):   # 메서드의 매개변수
+    self.first = first              # 메서드의 수행문
+    self.second = second            # 메서드의 수행문
+```
+
+a.setdata(4,2)처럼 호출하면 setdata메서드의 매개변수 first, second에는 각각 값 4와 2가 전달되어 setdata 메서드의 수행문은  
+다음과 같이 해석된다.  
+```python
+self.first = 4
+self.second = 2
+```
+self는 전달된 객체 a이므로 다시 다음과 같이 해석된다.  
+```python
+a.first = 4
+a.second = 2
+```
