@@ -214,3 +214,34 @@ a.div()를 수행하면 두 수를 나눈 결과 (4 / 2)를 돌려준다.
 ```
 앞에서 만든 FourCal 클래스에서 pass 문장을 삭제하고 그 대신 setdata 함수를 만들었다 클래스 안에 구현된 함수는 다른 말로 메서드라고 부른다.  
 
+일반적인 함수를 만들 때 다음과 같이 작성한다.  
+```python
+def 함수명(매개변수):
+    수행할 문장
+    ...
+```
+메서드도 클래스에 포함되어 있다는 점만 제외하면 일반 함수와 다를 것이 없다.  
+
+setdata 메서드를 다시 보면 다음과 같다.  
+```python
+def setdata(self, first, second):   # 메서드의 매개변수
+    self.first = first              # 메서드의 수행문
+    self.second = second            # 메서드의 수행문
+```
+
+### setdata 메서드의 매개변수
+
+setdataㅁ서드는 매개변수로 self, first, second 3개의 입력값을 받는다. 그런데 일반 함수와는 달리 메서드의 첫 번째 매개변수  
+self는 특별한 의미를 가진다.  
+
+다음과 같이 a객체를 만들고 a객체를 통해 setdata 메서드를 호출해 보자.  
+```python
+>>> a = FourCal()
+>>> a.setdata(4, 2)
+```
+
+> ※ 객체를 통해 클래스의 메서드를 호출하려면 a.setdata(4, 2)와 같이 도트(.) 연산자를 사용해야 한다.
+
+그런데 뭔가 좀 이상하지 않은가? setdata메서드에는 self, first,second총 3개의 매개변수가 필요한데 실제로는  
+a.setdata(4,2)처럼 2개만 전달했다. 왜 그럴까? 그 이유는 a.setdata(4,2)처럼 호출하면 setdata메서드의  
+첫 번째 매개변수 self에는 setdata메서드를 호출한 객체 a가 자동으로 전달되기 때문이다.
