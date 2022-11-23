@@ -270,3 +270,101 @@ self는 전달된 객체 a이므로 다시 다음과 같이 해석된다.
 a.first = 4
 a.second = 2
 ```
+a.first = 4 라는 문장이 수행되면 a 객체에 객체변수 first가 생성되고 4라는 값이 저장된다. 마찬가지로 a.second = 2라는 문장이  
+수행되면 a 객체에 객체변수 second가 생성되고 2라는 값이 저장된다.  
+
+> 객체에 생성되는 객체만의 변수를 객체변수라고 부른다.
+
+다음과 같이 확인해 보자.  
+```python
+>>> a = FourCal()
+>>> a.setdata(4, 2)
+>>> print(a.first)
+4
+>>> print(a.second)
+2
+```
+a 객체에 객체변수 first와 second가 생성되었음을 확인할 수 있다.  
+
+이번에는 다음과 같이 a,b 객체를 만들어 보자.  
+```python
+>>> a = FourCal()
+>>> b = FourCal()
+```
+그리고 a 객체의 객체변수 first를 다음과 같이 생성한다.  
+
+```python
+>>> b.setdata(3, 7)
+>>> print(b.first)
+3
+```
+
+위와 같이 진행하면 b 객체의 객체변수 first에는 값 3이 저장된다는 것을 확인할 수 있었다. 그렇다면 a객체의 first는 3으로 변할까?  
+아니면 기존갑 4를 유지할까? 다음과 같이 결과를 확인해 보자.  
+```python
+>>> print(a.first)
+4
+```
+a 객체의 first값은 b객체의 first값에 영향받지 않고 원래 값을 유지하고 있음을 확인할 수 있다.  
+클래스로 만든 객체의 객체변수는 다른 객체의 객체변수에 상관없이 독립적인 값을 유지한다. 클래스에서는 이부분을 이해하는것이 가장 중요하다.  
+
+현재까지 완성된 FourCal클래스  
+```python
+>>> class FourCal:
+...     def setdata(self, first, second):
+...         self.first = first
+...         self.second = second
+...
+>>>
+```
+
+### 더하기 기능 만들기
+
+```python
+>>> a = FourCal()
+>>> a.setdata(4, 2)
+>>> print(a.add())
+6
+```
+이 연산이 가능하도록 다음과 같이 FourCal 클래스를 만들어 보자.  
+
+```python
+>>> class FourCal:
+...     def setdata(self, first, second):
+...         self.first = first
+...         self.second = second
+...     def add(self):
+...         result = self.first + self.second
+...         return result
+...
+>>>
+```
+새롭게 추가된 것은 add메서드이다. 이제 클래스를 사용해 보자.  
+```python
+>>> a = FourCal()
+>>> a.setdata(4, 2)
+```
+위와 같이 호출하면 앞에서 살펴보았듯이 a객체의 first, second 객체변수에는 각각 값 4와 2가 저장될 것이다.  
+이제 add 메서드를 호출해 보자.
+```python
+>>> print(a.add())
+>>> 6
+```
+a.add()라고 호출하면 add메서드가 호출되어 값 6이 출력될 것이다. 어떤 과정을 거쳐 값 6이 출력되는지 add메서드를 따로  
+떼어내서 자세히 살펴보자.  
+
+```python
+def add(self):
+    result = self.first + self.second
+    return result
+```
+add 메서드의 매개변수는 self이고 리턴 값은 result이대. 리턴 값인 result를 계산하는 부분은 다음과 같다.  
+```python
+result = self.first + self.second
+```
+a.add()와 같이 a 객체에 의해 add 메서드가 수행되면 add메서드의 self에는 객체a가 자동으로 입력되므로  
+위 내용은 다음과 같이 해석된다.  
+```python
+result = a.first + a.second
+```
+위 내용은 a.add()
