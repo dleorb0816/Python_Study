@@ -367,4 +367,35 @@ a.add()와 같이 a 객체에 의해 add 메서드가 수행되면 add메서드�
 ```python
 result = a.first + a.second
 ```
-위 내용은 a.add()
+위 내용은 a.add() 메서드 호출 전에 a.setdata(4, 2)가 먼저 호출되어 a.first = 4, a.second = 2 라고  
+이미 설정되었기 때문에 다시 다음과 같이 해석된다.  
+```python
+result = 4 + 2
+```
+따라서 다음과 같이 a.add()를 호출하면 6을 리턴한다.  
+```python
+>>> print(a.add())
+6
+```
+
+### 곱하기, 뺴기, 나누기 기능 만들기
+```python
+>>> class FourCal:
+...     def setdata(self, first, second):
+...         self.first = first
+...         self.second = second
+...     def add(self):
+...         result = self.first + self.second
+...         return result
+...     def mul(self):
+...         result = self.first * self.second
+...         return result
+...     def sub(self):
+...         result = self.first - self.second
+...         return result
+...     def div(self):
+...         result = self.first / self.second
+...         return result
+...
+>>>
+```
