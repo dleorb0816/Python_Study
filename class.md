@@ -439,3 +439,108 @@ AttributeError: 'FourCal' object has no attribute 'first'
 FourCal 클래스의 인스턴스 a에 setdata 메서드를 수행하지 않고 add 메서드를 먼저 수행하면 "AttributeError:'FourCal'object has no  
 attribute 'first'" 오류가 발생한다. 왜냐하면 setdata 메서드를 수행해야 객체 a의 객체변수 first와 second가 생성되기 때문이다.  
 
+이렇게 객체에 first, second와 같은 초깃값을 설정해야 할 필요가 있을 때는 setdata와 같은 메서드를 호출하여 초기값을 설정하기보다는  
+생성자를 구현하는 것이 안전한 방법이다. 생성자(Constructor)란 객체가 생성될 때 자동으로 호출되는 메서드를 의미한다.  
+
+파이썬 메서드 이름으로 ```__init__```를 사용하면 이 메서드는 생성자가 된다. 다음과 같이 FourCal 클래스에 생성자를 추가해 보자.  
+> ```__init__```메서드의 init앞뒤로 붙은 __는 언더 스코어(_)두개를 붙여쓴것이다.
+
+```python
+>>> class FourCal:
+...     def __init__(self, first, second):
+...         self.first = first
+...         self.second = second
+...     def setdata(self, first, second):
+...         self.first = first
+...         self.second = second
+...     def add(self):
+...         result = self.first + self.second
+...         return result
+...     def mul(self):
+...         result = self.first * self.second
+...         return result
+...     def sub(self):
+...         result = self.first - self.second
+...         return result
+...     def div(self):
+...         result = self.first / self.second
+...         return result
+...
+>>>
+```
+
+새롭게 추가된 생성자 ```__init__``` 메서드만 따로 떼어 내서 살펴 보자.  
+
+```python
+def __init__(self, first, second):
+    self.first = first
+    self.second = second
+```
+
+```__init__``` 메서드는 setdata ㅁ서드와 이름만 다르고 모든게 동일하다. 단 메서드 이름을 ```__init__```으로 했기 때문에 생성자로 인식되어  
+객체가 생성되는 시점에 자동으로 호출되는 차이가 있다.  
+
+이제 다음처럼 예제를 수행해 보자.  
+```python
+>>> a = FourCal()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: __init__() missing 2 required positional arguments: 'first' and 'second'
+```
+
+```a = FourCal()```을 수행할 때 생성자 ```__init__```이 호출 되어 위와 같은 오류가 발생했다. 오류가 발생한 이유는 생성자의 매개변수 first와 second에  
+해당하는 값이 전달되지 않았기 때문이다.  
+
+위 오류를 해결하려면 다음처럼 first와 second에 해당되는 값을 전달하여 객체를 생성해야 한다.  
+
+```python
+>>> a = FourCal(4, 2)
+>>> 
+```
+위와 같이 수행하면 ```__init__``` 메서드의 매개변수에는각각 다음과 같은 값이 전달된다.  
+|매개변수|값|
+|:------|:------|
+|self|생성되는 객체|
+|first|4|
+|second|2|
+
+> ```__init__``` 메서드도 다른 메서드와 마찬가지로 첫 번째 매개변수 self에 새성되는 객체가 자동으로 전달된다는 점을 기억하자.  
+
+따라서 ```__init__``` 메서드가 호출되면 setdata 메서드를 호출했을 떄와 마찬가지로 first와 second라는 객체변수가 생성될 것이다.  
+다음과 같이 객체 변수의 값을 확인해 보자.  
+
+```python
+>>> a = FourCal(4, 2)
+>>> print(a.first)
+4
+>>> print(a.second)
+2
+```
+add나 div등의 메서드도 잘 동작하는지 확인해 보자.  
+
+```python
+>>> a = FourCal(4, 2)
+>>> a.add()
+6
+>>> a.div()
+2.0
+```
+이상 없이 잘 동작하는 것을 확인할수 있다.
+
+## 클래스의 상속
+
+상속(Inheritance)이란 "물려받다" 라는 뜻으로, "재산을 상속받다" 라고 할 떄의 상속과 같은 의미이다. 클래스에도 이 개념을 적용 할 수 있다.  
+어떤 클래스를 만들 때 다른 클래스의 기능을 물려받을 수 있게 만드는 것이다. 이번에는 상속 개념을 사용하여 우리가 만든 FourCal클래스에  
+a의 b제곱을 구할 수 있는 기능을 추가해 보자.  
+
+앞에서 FourCal 클래스는 이미 만들어 놓았으므로 FourCal클래스를 상속하는 MoreFourCal 클래스는 다음과 같이 간단하게 만들수 있다.  
+```python
+>>> class MoreFourCal(FourCal):
+...     pass
+... 
+>>>
+```
+
+클래스를 상속하기 위해서는 다음처럼 클래스 이름 뒤 괄호 안에 상속할 클래스 이름을 넣어주면 된다.  
+> class 클래스 이름(상속할 클래스 이름)
+MoreFourCal 클래스는 FourCal 클래스를 상속 했으므로 FourCal 래스의 모든 기능을 사용할 수 있어야 한다
