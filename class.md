@@ -399,3 +399,43 @@ result = 4 + 2
 ...
 >>>
 ```
+
+정말로 모든 것이 제대로 동작하는지 확인해 보자.  
+```python
+>>> a = FourCal()
+>>> b = FourCal()
+>>> a.setdata(4, 2)
+>>> b.setdata(3, 8)
+>>> a.add()
+6
+>>> a.mul()
+8
+>>> a.sub()
+2
+>>> a.div()
+2
+>>> b.add()
+11
+>>> b.mul()
+24
+>>> b.sub()
+-5
+>>> b.div()
+0.375
+```
+
+## 생성자(Contructor)
+
+이번에는 우리가 만든 FourCal클래스를 다음과 같이 사용해 보자.  
+```python
+>>> a = FourCal()
+>>> a.add()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 6, in add
+AttributeError: 'FourCal' object has no attribute 'first'
+```
+
+FourCal 클래스의 인스턴스 a에 setdata 메서드를 수행하지 않고 add 메서드를 먼저 수행하면 "AttributeError:'FourCal'object has no  
+attribute 'first'" 오류가 발생한다. 왜냐하면 setdata 메서드를 수행해야 객체 a의 객체변수 first와 second가 생성되기 때문이다.  
+
