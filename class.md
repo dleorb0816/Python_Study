@@ -543,4 +543,56 @@ a의 b제곱을 구할 수 있는 기능을 추가해 보자.
 
 클래스를 상속하기 위해서는 다음처럼 클래스 이름 뒤 괄호 안에 상속할 클래스 이름을 넣어주면 된다.  
 > class 클래스 이름(상속할 클래스 이름)
-MoreFourCal 클래스는 FourCal 클래스를 상속 했으므로 FourCal 래스의 모든 기능을 사용할 수 있어야 한다
+MoreFourCal 클래스는 FourCal 클래스를 상속 했으므로 FourCal 래스의 모든 기능을 사용할 수 있어야 한다.  
+
+다음과 같이 확인해 보자.
+```python
+>>> a = MoreFourCal(4, 2)
+>>> a.add()
+6
+>>> a.mul()
+8
+>>> a.sub()
+2
+>>> a.div()
+2
+```
+상속받은 FourCal 클래스의 기능을 모두 사용할 수 있음을 확인할 수 있다.  
+
+이제 원래 목적인 a의 b제곱을 계산하는 MoreFourCal클래스를 만들어 보자.  
+```python
+>>> class MoreFourCal(FourCal):
+...     def pow(self):
+...         result = self.first ** self.second
+...         return result
+...
+>>>
+```
+pass문장은 삭제하고 위와 같이 두 수의 거듭제곱을 구할 수 있는 pow메서드를 추가했다. 그리고 다음과 같이 pow메서드를 수행해 보자.  
+```python
+>>> a = MoreFourCal(4, 2)
+>>> a.pow()
+16
+>>> a.add()
+6
+```
+   
+MoreFourCal 클래스로 만든 a 객체에 값 4와 2를 설정한 후 pow 메서드를 호출하면 4의 2제곱인 16을 리턴하는 것을 확인할수 있다.  
+상속받은 기능인 add 메서드도 역시 잘 동작한다.  
+
+상속은 MoreFourCal 클래스처럼 기존 클래스(FourCal)는 그대로 놔둔 채 클래스의 기능을 확장시킬 때 주로 사용한다.
+
+## 메서드 오버라이딩
+
+이번에는 FourCal 클래스를 다음과 같이 실행해 보자.  
+```python
+>>> a = FourCal(4, 0)
+>>> a.div()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+    result = self.first / self.second
+ZeroDivisionError: division by zero
+```
+
+FourCal 클래스의 객체 a에 4와 0값을 설정하고 div 메서드를 호출하면 4를 0으로 나누려고 하기 때문에 위와 같은  
+ZeroDivisionError 오류가 발생한다. 하지만 0으로 나눌 때 오류가 아닌 0을 리턴하도록 만들고 싶다면 어떻게 해야 할까?  
