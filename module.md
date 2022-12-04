@@ -21,7 +21,7 @@ def sub(a, b):
 지금까지 에디터로 만든 파이썬 파일과 다르지 않다.  
 > 파이썬 확장자 ```.py```로 만든 파이썬 파일은 모두 모듈이다.
 
-## 모듈 불러오기
+### 모듈 불러오기
 
 우리가 만든 mod1.py파일, 즉 모듈을 파이썬에서 불러와 사용하려면 어떻게 해야 할까?
 
@@ -77,3 +77,75 @@ import 모듈이름
 ```
 
 그런데 위와 같이 하면 mod1.py 파일의 add함수만 사용할 수 있다. add 함수와 sub 함수를 둘 다 사용하고 싶다면 어떻게 해야 할까?  
+
+2가지 방법이 있다.
+```python
+from mod1 import add, sub
+```
+첫 번째 방법은 위와 같이```from 모듈이름 import 모듈함수1, 모듈함수2```처럼 사용하는 것이다. 콤마로 구분하여 필요한 함수를 불러올 수 있다.  
+```python
+from mod1 import *
+```
+두번째 방법은 위와 같이 * 문자를 사용하는 방법이다. 07장에서 공부할 정규 표현식에서 * 문자는 "모든것" 이라는 뜻인데 파이썬에서도 마찬가지 의미로 사용한다.  
+따라서 from mod1 import * 는 mod1모듈의 모든 함수를 불러와 사용하겠다는 뜻이다.  
+
+mod1.py파일에는 함수가 2개밖에 없기 때문에 위 2가지 방법은 동일하게 적용된다.  
+
+### if__name__=="__main__":의 의미
+
+이번에는 mod1.py파일을 다음과 같이 편경해 보자.  
+```python
+# mod1.py 
+def add(a, b): 
+    return a+b
+
+def sub(a, b): 
+    return a-b
+
+print(add(1, 4))
+print(sub(4, 2))
+```
+add(1,4)와 sub(4,2)의 결과를 출력하는 문장을 추가했다. 그리고 출력한 결괏값을 확인하기 위해 mod1.py파일을 다음과 같이  
+실행해 보자.  
+```python
+C:\doit>python mod1.py
+5
+2
+```
+예상한 대로 결괏값이 잘 출력된다. 그런데 이 mod1.py파일의 add와 sub함수를 사용하기 위해 mod1모듈을 import할 때는 좀 이상한  
+문제가 생긴다. 명령 프롬프트 창에서 다음을 따라 해 보자.  
+```python
+C:\Users\pahkey> cd C:\doit
+C:\doit> python
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import mod1
+5
+2
+```
+엉뚱하게도 import mod1을 수행하는 순간 mod1.py 파일이 실행되어 결괏값을 출력한다. 우리는 단지 mod1.py파일의 add와 sub 함수만 사용하려고 했는데 말이다.  
+
+이러한 문제를 방지하려면 mod1.py파일을 다음처럼 변경해야 한다.  
+```python
+# mod1.py 
+def add(a, b): 
+    return a+b
+
+def sub(a, b): 
+    return a-b
+
+if __name__ == "__main__":
+    print(add(1, 4))
+    print(sub(4, 2))
+```
+```if __name__=="__main__"```을 사용하면 C:\doit>python mod1.py처럼 직접 이 파일을 실행했을 때는 ```__name__ == "__main__"```이  
+참이 되어 if문 다음 문장이 수행된다. 반대로 대화형 인터프리터나 다른 파일에서 이 모듈을 불러서 사용할 떄는 ```__name__=="__main__"```이  
+거짓이 되어 if문 다음문장이 수행되지 않는다.
+
+위와 같이 수정한 후 다시 대화형 인터프리터를 열고 실행해 보자.  
+```python
+>>> import mod1
+>>>
+```
+아무 결괏값도 출력되지 않는 것을 확인할 수 있다.  
+
+### 클래스나 변수등을 포함한 모듈
