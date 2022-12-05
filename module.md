@@ -5,7 +5,7 @@
 이미 만들어 놓은 모듈을 사용할 수도 있고 우리가 직접 만들어서 사용할 수도 있다. 여기에는 모듈을 어떻게 만들고 사용할  
 수 있는지 알아보겠다.  
 
-### 모듈 만들기
+## 모듈 만들기
 
 모듈에 대해 자세히 살펴보기 전에 간단한 모듈을 한번 만들어 보자.  
 ```python
@@ -21,7 +21,7 @@ def sub(a, b):
 지금까지 에디터로 만든 파이썬 파일과 다르지 않다.  
 > 파이썬 확장자 ```.py```로 만든 파이썬 파일은 모두 모듈이다.
 
-### 모듈 불러오기
+## 모듈 불러오기
 
 우리가 만든 mod1.py파일, 즉 모듈을 파이썬에서 불러와 사용하려면 어떻게 해야 할까?
 
@@ -91,7 +91,7 @@ from mod1 import *
 
 mod1.py파일에는 함수가 2개밖에 없기 때문에 위 2가지 방법은 동일하게 적용된다.  
 
-### if__name__=="__main__":의 의미
+## if__name__=="__main__":의 의미
 
 이번에는 mod1.py파일을 다음과 같이 편경해 보자.  
 ```python
@@ -148,4 +148,129 @@ if __name__ == "__main__":
 ```
 아무 결괏값도 출력되지 않는 것을 확인할 수 있다.  
 
-### 클래스나 변수등을 포함한 모듈
+## 클래스나 변수등을 포함한 모듈
+
+지금까지 살펴본 모듈은 함수만 포함했지만 클래스나 변수 등을 포함할 수도 있다. 다음 프로그램을 작성해 보자.  
+```python
+# mod2.py 
+PI = 3.141592
+
+class Math: 
+    def solv(self, r): 
+        return PI * (r ** 2) 
+
+def add(a, b): 
+    return a+b 
+```
+
+이 파일은 원의 넓이를 계산하는 Math 클래스와 두 값을 더하는 add함수 그리고 원주율 값에 해당되는 PI변수처럼 클래스, 함수, 변수 등을  
+모두 포함하고 있다.  
+
+파일이름을 mod2.py로 하고 C:\doit디렉터리에 저장하자. 대화형 인터프리터를 열고 다음과 같이 따라 해 보자.  
+```
+C:\Users\pahkey> cd C:\doit
+C:\doit> python
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import mod2
+>>> print(mod2.PI)
+3.141592
+```
+위 예에서 볼 수 있듯이 mod2.PI처럼 입력해서 mod2.py 파일에 있는 PI변수 값을 사용할 수 있다.  
+```python
+>>> a = mod2.Math()
+>>> print(a.solv(2))
+12.566368
+```
+위 예는 mod2.py에 있는 Math 클래스를 사용하는 방법을 보여준다. 위 예처럼 모듈 안에 있는 클래스를 사용하려면"."(도트 연산자)로  
+클래스 이름앞에 모듈 이름을 먼저 입력해야 한다.
+```python
+>>> print(mod2.add(mod2.PI, 4.4))
+7.541592
+```
+mod2.py에 있는 add함수 역시 당연히 사용할 수 있다.  
+
+## 다른파일에서 모듈 불러오기
+
+지금까지는 만들어 놓은 모듈 파일을 사용하기 위해 대화형 인터프리터만 사용했다. 이번에는 다른 파이썬 파일에서 이전에 만들어 놓은  
+모듈을 불러와서 사용하는 방법에 대해 알아보자. 여기에서는 조금 전에 만든 모듈인 mod2.py파일을 다른 파이썬 파일에서 불러와 사용할 것이다.  
+
+먼저 에디터로 C:\doit\modtest.py 파일을 다음과 같이 작성하자.
+
+```python
+# modtest.py
+import mod2
+result = mod2.add(3, 4)
+print(result)
+```
+위에서 볼 수 있듯이 다른 파이썬 파일에서도 import mod2로 mod2 모듈을 불러와서 사용할 수 있다. 대화형 인터프리터에서 한것과 마찬가지 방법이다.  
+위 예제가 정상적으로 실행되기 위해서는 modtest.py 파일과 mod2.py 파일이 동일한 디렉터리에 있어야 한다.  
+
+## 모듈을 불러오는 또 다른 방법
+
+우리는 지금껏 해당 모듈이 있는 디렉터리로 이동한 후에야 그 모듈을 사용할 수 있었다. 이번에는 모듈을 저장한 디렉터리로 이동하지 않고 모듈을 불러와서 사용하는  
+방법에 대해 알아보자.  
+
+먼저 다음과 같이 이전에 만든 mod2.py 파일을 C:\doit\mymod로 이동시킨다.  
+```python
+C:\Users\pahkey>cd C:\doit
+C:\doit>mkdir mymod
+C:\doit>move mod2.py mymod
+        1개 파일을 이동했습니다.
+```
+그리고 다음 예를 따라 해 보자.  
+
+### sys.path.append 사용하기
+
+먼저 파이써 셸을 실행한 후 sys모듈을 불러온다.  
+```python
+C:\doit>python
+>>> import sys
+```
+
+sys 모듈은 파이썬을 설치할 떄 함께 설치되는 라이브러리 모듈이다. sys에 대해서는 뒤에서 자세하게 다룰 것이다.  이 sys모듈을 사용하면  
+파이썬 라이브러리가 설치되어 있는 디렉터리를 확인할 수 있다.
+
+다음과 같이 입력해 보자.  
+```PYTHON
+>>> sys.path
+['', 'C:\\Windows\\SYSTEM32\\python311.zip', 'c:\\Python311\\DLLs', 
+'c:\\Python311\\lib', 'c:\\Python311', 'c:\\Python311\\lib\\site-packages']
+```
+
+sys.path는 파이썬 라이브러리가 설치되어 있는 디렉터리를 보여 준다. 만약 파이썬 모듈이 위 디렉터리에 들어 있다면 모듈이 저장된 디렉터리로  
+이동할 필요 없이 바로 불러서 사용할 수 있다. 그렇다면 sys.path에 C:\doit\mymod 디렉터리를 추가하면 아무 곳에서나 불러 사용할 수 있지 않을까?  
+
+당연하다. sys.path는 리스트이므로 우리는 다음과 같이 할수 있다.  
+```python
+>>> sys.path.append("C:/doit/mymod")
+>>> sys.path
+['', 'C:\\Windows\\SYSTEM32\\python311.zip', 'c:\\Python311\\DLLs', 
+'c:\\Python311\\lib', 'c:\\Python311', 'c:\\Python311\\lib\\site-packages', 
+'C:/doit/mymod']
+>>>
+```
+
+실제로 모듈을 불러와서 사용할 수 있는지 확인해 보자.  
+```python
+>>> import mod2
+>>> print(mod2.add(3,4))
+7
+```
+이상없이 불러와서 사용할 수 있다.  
+
+### PYTHONPATH 환경 변수 사용하기
+
+모듈을 불러와서 사용하는 또 다른 방법으로는 PYTHONPATH환경 변수를 사용하는 방법이 있다.  
+
+다음과 같이 따라해 보자.  
+```PYTHON
+C:\doit>set PYTHONPATH=C:\doit\mymod
+C:\doit>python
+>>> import mod2
+>>> print(mod2.add(3,4))
+7
+```
+set 명령어를 사용해 PYTHONPATH환경 변수에 mod2.py파일이 있는  C:\doit\mymod 디렉터리를 설정한다. 그러면  디렉터리 이동이나  
+별도의 모듈 추가 작업 없이 mod2 모듈을 불러와서 사용할 수 있다.  
+>>> 맥이나 유닉스 환경에서는 set대신 export명령을 사용해야 한다.
+
