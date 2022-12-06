@@ -114,3 +114,39 @@ Traceback (most recent call last):
 ImportError: No module named echo_test
 ```
 도트 연산자(.)를 사용해서 import a.b.c처럼 import할 때 가장 마지막 항목인 c는 반드시 모듈 또는 패키지여야만 한다.
+
+## __init__.py의 용도
+
+```__init__.py```파일은 해당 디렉터리가 패키지의 일부임을 알려주는 역할을 한다. 만약 game,sound,graphic등 패키지에 포함된 디렉터리에  
+```__init__.py```파일이 없다면 패키지로 인식되지 않는다.  
+> python3.3 버전부터는 ```__init__.py```파일이 없어도 패키지로 인식한다. 하지만 하위 버전 호환을 위해 ```__init.py__```파일을
+> 생성하는것이 안전한 방법이다.
+
+다음을 따라해 보자.  
+```python
+>>> from game.sound import *
+>>> echo.echo_test()
+Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+NameError: name 'echo' is not defined
+```
+뭔가 이상하지 않은가? 분명 game.sound 패키지에서 모든것(*)을 import하였으므로 echo 모듈을 사용할 수 있어야 할 것 같은데 echo라는   
+이름이 정의되지 않았다는 이름 오류(NameError가 발생했다.  
+
+이렇게 특정 디렉터리의 모듈을 *를 사용하여 import할때는 다음과 같이 해당 디렉터리의 ```__init__.py```파일에 ```__all__```변수를  
+설정하고 import할 수 있는 모듈을 정의해 주어야 한다.  
+```python
+# C:/doit/game/sound/__init__.py
+__all__ = ['echo']
+```
+여기에서 ```__all__```이 의미하는 것은 sound 디렉터리에서 * 기호를 사용하여 import할 경우 이곳에 정의된 echo 모듈만 import된다는  
+의미이다.
+> 착각하기 쉬운데 from game.sound.echo import * 는 __all__과 상관없이 무조건 import된다. 이렇게 __all__과 상관없이
+> 무조건 import되는 경우는 from a.b.c import * 에서 from의 마지막 항목인 c가 모듈인 경우이다.
+
+위와 같이 __init__.py파일을 변경한 후 위 예제를 수행하면 원하던 결과가 출력되는 것을 확인할 수 있다.  
+```
+>>> from game.sound import *
+>>> echo.echo_test()
+echo
+```
