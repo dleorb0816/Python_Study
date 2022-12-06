@@ -150,3 +150,47 @@ __all__ = ['echo']
 >>> echo.echo_test()
 echo
 ```
+
+## relative 패키지
+만약 graphic 디렉터리의 render.py모듈이 sound 디렉터리의 echo.py 모듈을 사용하고 싶다면 어떻게 해야 할까? 다음과 같이  
+render.py를 수정하면 가능하다.
+```python
+# render.py
+from game.sound.echo import echo_test
+def render_test():
+    print("render")
+    echo_test()
+```
+```from game.sound.echo import echo_test``` 문장을 추가하여 echo_test함수를 사용할 수 있도록 수정했다.
+
+이렇게 수정한 후 다음과 같이 수행해 보자.  
+
+```python
+>>> from game.graphic.render import render_test
+>>> render_test()
+render
+echo
+```
+
+이상 없이 잘 수행된다.  
+
+위 예제처럼 ```from game.sound.echo import echo_test```를 입력해 전체 경로를 사용하여 import할 수도 있지만 다음과 같이 relative  
+하게 import하는 것도 가능하다.  
+
+```python
+# render.py
+from ..sound.echo import echo_test
+
+def render_test():
+    print("render")
+    echo_test()
+```
+
+```from game.sound.echo_test```가 from ..sound.echo imort echo_test로 변경되었다. 여기에서 ..은 render.py파일의  
+부모 디렉터리를 의미한다. 따라서 render.py파일의 부모 디렉터리는 game이므로 위와 같은 import가 가능한 것이다.  
+
+> render.py 파일의 현재 디렉터리는 graphic이고 부모 디렉터리는 game이다.
+
+relative한 접근자에는 다음과 같은 것이 있다.
+- .. : 부모 디렉터리
+- . : 현재 
