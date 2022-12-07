@@ -216,3 +216,74 @@ else:
 
 만약 '나이를 입력하세요:' 라는 질문에 숫자가 아닌 다른 값을 입력하면 오류가 발생하여 '입력이 정확하지 않습니다.'라는 문장을  
 출력한다. 오류가 없을 경우에만 else절이 수행된다.
+
+## 오류 회피하기
+
+코드를 작성하다 보면 특정 오류가 발생할 경우 그냥 통과시켜야 할 때가 있다. 다음예를 보자.  
+
+```python
+try:
+    f = open("나없는파일", 'r')
+except FileNotFoundError:
+    pass
+```
+
+try문 안에서 FileNotFoundError가 발생할 경우에 pass를 사용하여 오류를 그냥 회피하도록 작성한 예제이다.  
+
+## 오류 일부러 발생시키기
+
+이상하게 들리겠지만 프로그래밍을 하다보면 종종 오류를 일부러 발생 시켜야할 경우도 생긴다. 파이썬은 raise명령어를 사용해  
+오류를 강제로 발생시킬 수 있다.  
+
+예를 들어 Bird클래스를 상속받는 자식 클래스는 반드시 fly라는 함수를 구현하도록 만들고 싶은 경우(강제로 그렇게 하고싶은 경우)가  
+잇을 수 있다. 다음 예를 보자.  
+
+```python
+class Bird:
+    def fly(self):
+        raise NotImplementedError
+```
+
+위 예제는 Bird클래스를 상속받는 자식 클래스는 반드시 fly함수를 구현해야 한다는 의지를 보여준다. 만약 자식 클래스가 fly함수를  
+구현하지 않은 상태로 fly함수를 호출한다면 어떻게 될까?  
+
+> NotImplmentedError는 파이썬에 이미 정의되어 있는 오류로, 꼭 작성해야 하는 부분이 구현되지 않았을 경우 일부러 오류를 일으키기
+> 위해 사용한다.
+
+```python
+class Eagle(Bird):
+    pass
+
+eagle = Eagle()
+eagle.fly()
+```
+
+```python
+Traceback (most recent call last):
+  File "...", line 33, in <module>
+    eagle.fly()
+  File "...", line 26, in fly
+    raise NotImplementedError
+NotImplementedError
+```
+
+Eagle 클래스는 Bird 클래스를 상속받았다. 그런데 Eagle클래스는 fly메서드를 ㅇ버라이딩하여 구현하지 않았다. 따라서 eagle객체의  
+fly 메서드를 수행하는 순간 Bird 클래스의 fly메서드가 수행되어 NotImplementedError가 발생한다.  
+
+NotImplementedError가 발생되지 않게 하려면 다음과 같이 Eagle클래스에 fly함수를 구현해야 한다.  
+
+```python
+class Eagle(Bird):
+    def fly(self):
+        print("very fast")
+
+eagle = Eagle()
+eagle.fly()
+```
+
+위 예처럼 fly 함수를 구현한 후 프로그램을 실행하면 오류 없이 다음 문장이 출력된다.  
+
+```python
+very fast
+```
+
