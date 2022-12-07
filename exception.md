@@ -287,3 +287,79 @@ eagle.fly()
 very fast
 ```
 
+## 예외 만들기
+
+프로그램 수행 도중 특수한 경우에만 예외 처리를 하기 위해서 종종 예외를 만들어서 사용한다. 이번에는 직접 예외를 만들어 보자.  
+예외는 다음과 같이 파이썬 내장 클래스인 Exception 클래스를 상속하여 만들 수 있다.  
+
+```python
+class MyError(Exception):
+    pass
+```
+
+그리고 별명을 출력하는 함수를 다음과 같이 작성해 보자.  
+
+```python
+def say_nick(nick):
+    if nick == '바보':
+        raise MyError()
+    print(nick)
+```
+
+그리고 다음과 같이 say_nick 함수를 호출해 보자.  
+
+```python
+say_nick("천사")
+say_nick("바보")
+```
+
+저장한 뒤 프로그램을 실행해 ㅂ면 다음과 같이 "천사"가 한 번 출력된 후 MyError가 발생한다.  
+
+```python
+천사
+Traceback (most recent call last):
+  File "...", line 11, in <module>
+    say_nick("바보")
+  File "...", line 7, in say_nick
+    raise MyError()
+__main__.MyError
+```
+
+이번에는 예외 처리 기법을 사용하여 MyError 발생을 예외 처리해 보자.  
+
+```python
+try:
+    say_nick("천사")
+    say_nick("바보")
+except MyError:
+    print("허용되지 않는 별명입니다.")
+```
+
+프로그램을 실행하면 다음과 같이 출력된다.  
+
+```python
+천사
+허용되지 않는 별명입니다.
+```
+
+만약 오류 메시지를 사용하고 싶다면 다음처럼 예외 처리를 하면 된다.  
+
+```python
+try:
+    say_nick("천사")
+    say_nick("바보")
+except MyError as e:
+    print(e)
+```
+
+하지만 프로그램을 실행해 보면 print(e)러 오류 메시지가 출력되지 않는 것을 확인 할수 있다. 오류 메시지를 출력했을 때 오류 메시지가 보이게 하려면  
+오류 클래스에 다음과 같은 __str__ 메서드를 구현해야 한다. __str__메서드는 print(e)처럼 오류 메시지를 print문으로 출력할 경우에 호출되는  
+메서드 이다.  
+
+```python
+class MyError(Exception):
+    def __str__(self):
+        return "허용되지 않는 별명입니다."
+```
+
+프로그램을 다시 실행해 보면 "허용되지 않는 별명입니다."라는 오류메시지가 출력되는 것을 확인할 수 있을 것이다.
