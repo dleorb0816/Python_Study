@@ -40,3 +40,179 @@ IndexError: list index out of range
 a는 리스트 [1,2,3]이므로 a[4]는 a리스트에서 얻을 수 없는 값이다. 따라서 IndexError 오류가 발생한다. 파이썬은 이런 오류  
 가 발생하면 프로그램을 중단하고 오류 메시지를 보여 준다.
 
+## 오류 예외 처리 기법
+
+자, 이제 유연한 프로그래밍을 위한 오류 처리 방법에 대해 알아보자.  
+
+### try, except문
+
+다음은 오류 처리를 위한 try,except문의 기본구조이다.  
+
+```python
+try:
+    ...
+except [발생오류 [as 오류변수]]:
+    ...
+```
+
+try 블록 수행 중 오류가 발생하면 except 블록이 수행된다. 하지만 try블록에서 오류가 발생하지 않는다면 except 블록은 수행되지 않는다.
+
+except 구문을 자세히 살펴보자.
+
+> except [발생오류 [ as 오류변수]]:
+
+위 구문을 보면 [] 기호를 사용하는데, 이 기호는 괄호 안의 내용을 생략할 수 있다는 관례적인 표기법이다. 즉 except 구문은 다음 3가지  
+방법으로 사용할 수 있다.  
+
+### 1. try, except만 쓰는 방법
+```python
+try:
+    ...
+except:
+    ...
+```
+이 경우는 오류 종류에 상관없이 오류가 발생하면 except 블록을 수행한다.  
+
+### 2. 발생 오류만 포함한 except 문
+
+```python
+try:
+    ...
+except 발생오류:
+    ...
+```
+
+이 경우는 오류가 발생했을 때 except문에 미리 정해 놓은 오류와 동일한 오류일 경우에만 except 블록을 수행한다는 뜻이다.  
+
+### 3. 발생오류와 오류변수까지 포함한 except문
+
+```python
+try:
+    ...
+except 발생오류 as 오류변수:
+    ...
+```
+
+이 경우는 두 번째 경우에서 오류의 내용까지 알고 싶을때 사용하는 방법이다.  
+이 방법의 예를 들어 보면 다음과 같다.  
+
+```python
+try:
+    4 / 0
+except ZeroDivisionError as e:
+    print(e)
+```
+
+위처럼 4를 0으로 나누려고 하면 ZeroDivisionError가 발생하여 except블록이 실행되고 오류변수 e에 담기는 오류 메시지를 출력할 수 있다.  
+출력한 오류메시지는 다음과 같다.  
+
+> division by zero
+
+### try .. finally
+
+try문에는 finally절을 사용할 수 있다. finally절은 try문 수행 도중 예외 발생 여무에 상관없이 항상 수행된다. 보통 finally절은 사용한 리소스를  
+close해야 할 때에 많이 사용한다.  
+
+다음 예를 보자.  
+
+```python
+try:
+    f = open('foo.txt', 'w')
+    # 무언가를 수행한다.
+
+    (... 생략 ...)
+
+finally:
+    f.close()  # 중간에 오류가 발생하더라도 무조건 실행된다.
+```
+
+foo.txt 파일을 쓰기 모드로 연 후에 try문을 수행한 후 예외 발생 여부와 상관없이 finally절에서 f.close()로 열린 파일을 닫을 수 있다.  
+
+### 여러개의 오류처리하기
+
+try문 안에서 여러 개의 오류를 처리하려면 다음과 같이 사용한다.  
+
+```python
+try:
+    ...
+except 발생오류1:
+   ... 
+except 발생오류2:
+   ...
+```
+
+즉 0으로 나누는 오류와 인덱싱 오류를 다음과 같이 처리할 수 있다.  
+
+```python
+try:
+    a = [1,2]
+    print(a[3])
+    4/0
+except ZeroDivisionError:
+    print("0으로 나눌 수 없습니다.")
+except IndexError:
+    print("인덱싱 할 수 없습니다.")
+```
+
+a는 2개의 요솟값을 가지고 있기 때문에 a[3]는 IndexError를 발생시키므로 "인덱싱할 수 없습니다."라는 문자열이 출력 될것이다.  
+인덱싱 오류가 먼저 발생했으므로 4/0으로 발생되는 ZeroDivisionError 오류는 발생하지 않는다.  
+
+앞에서 알아본 것과 마찬가지로 오류 메시지도 다음과 같이 확인할 수 있다.  
+
+```python
+try:
+    a = [1,2]
+    print(a[3])
+    4/0
+except ZeroDivisionError as e:
+    print(e)
+except IndexError as e:
+    print(e)
+```
+
+프로그램을 실행하면 "list index out of range" 라는 오류 메시지가 출력될 것이다.  
+
+다음과 같이 ZerroDivisionError와 IndexError를 함께 처리할 수도 있다.  
+
+```python
+try:
+    a = [1,2]
+    print(a[3])
+    4/0
+except (ZeroDivisionError, IndexError) as e:
+    print(e)
+```
+
+2개 이상의 오류를 동일하게 처리하기 위해서는 위와 같이 괄호를 사용하여 함께 묶어 처리하면 된다.  
+
+### try... else
+
+try 문에는 다음처럼 else절을 사용할 수 있다.  
+
+```python
+try:
+    ...
+except [발생오류 [as 오류변수]]:
+    ...
+else:  # 오류가 없을 경우에만 수행된다.
+    ...
+```
+
+try문 수행중 오류가 발생하면 except절이 수행되고 오류가 없으면 else절이 수행된다.  
+
+다음은 try문에 else절을 사용한 간단한 예제이다.  
+
+```python
+try:
+    age=int(input('나이를 입력하세요: '))
+except:
+    print('입력이 정확하지 않습니다.')
+else:
+    if age <= 18:
+        print('미성년자는 출입금지입니다.')
+    else:
+        print('환영합니다.')
+```
+
+만약 '나이를 입력하세요:' 라는 질문에 숫자가 아닌 다른 값을 입력하면 오류가 발생하여 '입력이 정확하지 않습니다.'라는 문장을  
+출력한다. 오류가 없을 경우에만 else절이 수행된다.
