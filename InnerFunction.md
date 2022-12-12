@@ -251,8 +251,8 @@ int(x, radix)는 진수로 표현된 문자열 x를 10진수로 변환하여 리
 
 ## isinstance
 
-isinstance(object, class)함수는 첫 번째 인수로 객체, 두 번째 인수로 클래스를 받는다. 입력으로 받은 객체가 그 클래스의 인스턴스인지를 판단하여  
-참이면 True, 거짓이면 False를 리턴한다.  
+isinstance(object, class)함수는 첫 번째 인수로 객체, 두 번째 인수로 클래스를 받는다. 입력으로 받은 객체가 그 클래스의 인스턴스인지를  
+판단하여 참이면 True, 거짓이면 False를 리턴한다.  
 
 ```python
 >>> class Person: pass
