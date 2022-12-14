@@ -45,5 +45,36 @@ day2에서 day1을 빼면 diff 객체가 리턴되고 이 객체를 이용하면
 
 2019년 12월 14일은 토요일이므로 isoweekday()를 사용하면 토요일을 뜻하는 6이 리턴된다.(weekday를 사용하면 5가 리턴된다.)  
 
-##time
+## time
 
+시간과 관련된 time모듈에는 함수가 굉장히 많다. 그중 가장 유용한 몇가지만 알아보자.  
+
+### time.time
+
+```time.time()```은 UTC를 사용하여 현재 시간을 실수 형태로 리턴하는 함수이다.  
+1970년 1월 1일 0시 0분 0초를 기준으로 지난 시간을 초 단위로 돌려준다.  
+
+```python
+>>> import time
+>>> time.time()
+988458015.73417199
+```
+
+### time.localtime
+
+```time.localtime```은 ```time.time()```이 리턴한 실수 값을 사용해서 연도,월,일,시,분,초, ... 의 형태로 바꾸어 주는 함수이다.  
+
+```python
+>>> time.localtime(time.time())
+time.struct_time(tm_year=2013, tm_mon=5, tm_mday=21, tm_hour=16,
+    tm_min=48, tm_sec=42, tm_wday=1, tm_yday=141, tm_isdst=0)
+```
+
+### time.asctime
+
+위 time.localtime에 의해서 반환된 튜플 형태의 값을 인수로 받아서 날짜와 시간을 알아보기 쉬운 형태로 리턴하는 함수.  
+
+```python
+>>> time.asctime(time.localtime(time.time()))
+'Sat Apr 28 20:50:20 2001'
+```
