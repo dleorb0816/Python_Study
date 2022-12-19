@@ -404,3 +404,40 @@ iterools.combinations(range(1,46), 6)은 1~45의 숫자중에서 6개를 뽑는 
 
 선택할 수 있는 로또 번호의 가짓수는 8,145,060이다.  
 
+## functools.reduce
+
+functools.reduce(function, iterable)은 반복 가능한 객체(iterable)의 요소에 차례대로(왼쪽에서 오른쪽으로) 누적 적용하여  
+이 객체를 하나의 값으로 줄이는 함수이다.  
+
+다음은 입력 인수 data의 요소를 모두 더하여 리턴하는 add()함수이다.  
+
+```python
+def add(data):
+    result = 0
+    for i in data:
+        result += i
+    return result
+
+data = [1, 2, 3, 4, 5]
+result = add(data)
+print(result)  # 15 출력
+```
+
+functools.reduce()를 사용하여 마찬가지로 동작하는 코드를 작성하려면 어떻게 해야 할까?  
+functools.reduce()를 사용한 코드는 다음과 같다.  
+
+```python
+import functools
+
+data = [1, 2, 3, 4, 5]
+result = functools.reduce(lambda x, y: x + y, data)
+print(result)  # 15 출력
+```
+
+functools.reduce()를 사용하면 reduce()에 선언한 람다 함수를 data요소에 차례대로 누적 적용하여 다음과 같이 계산한다.  
+
+```
+((((1+2)+3)+4)+5)
+```
+
+따라서 앞서 본 add()함수와 동일한 역할을 하게 된다.  
