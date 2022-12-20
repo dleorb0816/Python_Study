@@ -525,3 +525,79 @@ import shutil
 
 shutil.copy("c:/doit/a.txt", "c:/temp/a.txt.bak")
 ```
+
+## glob
+
+가끔 파일을 읽고 쓰는 기능이 있는 프로그램을 만들다 보면 특정 디렉터리에 있는 파일 이름 모두를 알아야 할 때가 있다.  
+이럴때 사용하는 모듈이 바로 glob이다.  
+
+### 디렉터리에 있는 파일들을 리스트로 만들기 - glob(pathname)  
+
+glob 모듈은 디렉터리 안의 파일들을 읽어서 리턴한다. *,?등 메타 문자를 써서 원하는 파일만 읽어 들일 수도 있다.  
+다음은 C:/doit 디렉터리에 있는 파일 중 이름이 mark로 시작하는 파일을 모두 찾아서 읽어들이는 예이다.
+
+```python
+>>> import glob
+>>> glob.glob("c:/doit/mark*")
+['c:/doit\\marks1.py', 'c:/doit\\marks2.py', 'c:/doit\\marks3.py']
+>>>
+```
+
+## pickle
+
+pickle은 객체의 형태를 그대로 유지하면서 파일에 저장하고 불러올 수 있게 하는 모듈이다. 다음 예는 pickle 모듈의 dump함수를  
+사용하여 딕셔너리 객체인 data를 그대로 파일에 저장하는 방법을 보여준다.  
+
+```python
+>>> import pickle
+>>> f = open("test.txt", 'wb')
+>>> data = {1: 'python', 2: 'you need'}
+>>> pickle.dump(data, f)
+>>> f.close()
+```
+
+다음은 pickle.dump로 저장한 파일을 pickle.load를 사용해서 원래 있던 딕셔너리 객체(data)상태 그대로 불러오는 예이다.  
+
+```python
+>>> import pickle
+>>> f = open("test.txt", 'rb')
+>>> data = pickle.load(f)
+>>> print(data)
+{2:'you need', 1:'python'}
+```
+
+위 예에서는 딕셔너리 객체를 사용했지만 어떤 자료형이든 저장하고 불러올수 있다.  
+
+## os
+
+os모듈은 환경 변수나 디렉터리, 파일 등의 os 자원을 제어할 수 있게 해주는 모듈이다.  
+
+### 내 시스템의 환경 변수 값을 알고 싶을 때 - os.environ
+
+시스템은 제각기 다른 환경 변수 값을 가지고 있는데, os.environ은 현재 시스템의 환경 변수 값을 리턴한다. 다음을 따라 해 보자.  
+
+```python
+>>> import os
+>>> os.environ
+environ({'PROGRAMFILES': 'C:\\Program Files', 'APPDATA': … 생략 …})
+>>>
+```
+os.environ은 환경 변수에 대한 정보를 딕셔너리 형태로 구성된 environ 객체로 리턴한다.  
+자세히 보면 여러가지 유용한 정보를 찾을 수 있다.  
+
+돌려받은 객체는 다음과 같이 호출히ㅏ여 사용할수 있다. 다음은 필자 시스템의 PATH 환경 변수 내용이다.  
+
+```python
+>>> os.environ['PATH']
+'C:\\ProgramData\\Oracle\\Java\\javapath;...생략...'
+```
+
+### 디렉터리 위치 변경하기 - os.chdir
+
+os.chdir를 사용하면 다음과 같이 현재 디렉터리 위치를 변경할 수 있다.  
+
+```python
+>>> os.chdir("C:\WINDOWS")
+```
+
+### 디렉터리 위치 돌려받기 - 
