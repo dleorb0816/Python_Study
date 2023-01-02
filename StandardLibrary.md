@@ -631,3 +631,69 @@ os.popen은 시스템 명령어를 실행한 결괏값을 읽기 모드 형태�
 ```python
 >>> print(f.read())
 ```
+
+### 기타 유용한 OS 관련 함수
+
+**함수**|**설명**|
+---|---|
+os.mkdir(디렉터리)| 디렉터리를 생성한다.|
+os.rmdir(디렉터리)| 디렉터리를 삭제한다.|
+os.unlink(파일)| 파일을 지운다.|
+os.rename(src,dst)|src라인 이름의 파일을 dst라는 이름으로 바꾼다.|
+
+## zipfile
+
+zipfile은 여러 개의 파일을 zip 형식으로 합치거나 이를 해제할 떄 사용하는 모듈이다.  
+
+다음과 같은 3개의 텍스트 파일이 있다고 하자.  
+
+```python
+a.txt
+b.txt
+c.txt
+```
+
+이 3개의 텍스트 파일을 하나로 합쳐 mytext.zip이라는 파일을 만들고, 이 파일을 원래의 텍스트 파일 3개로 해제하는 프로그램을 만들려면  
+어떻게 해야할까?  
+
+zipfile.zipFile()을 사용하여 해결해 보자.  
+
+```
+import zipfile
+
+# 파일 합치기
+with zipfile.ZipFile('mytext.zip', 'w') as myzip:
+    myzip.write('a.txt')
+    myzip.write('b.txt')
+    myzip.write('c.txt')
+
+# 해제하기
+with zipfile.ZipFile('mytext.zip') as myzip:
+    myzip.extractall()
+```
+
+ZipFile 객체의 write() 함수로 개별 파일을 추가할 수 있고 extreactall() 함수를 사용하면 모둔 파일을 해제할 수 있다.  
+합친 파일에서 특정 파일만 해제하고 싶다면 다음과 같이 extract()함수를 사용하면 된다.  
+
+```python
+with zipfile.ZipFile('mytext.zip') as myzip:
+    myzip.extract('a.txt')
+```
+
+만약 파일을 압축하여 묶고 싶은 경우에는 compression, compresslevel 옵션을 사용할 수 있다.  
+
+```python
+with zipfile.ZipFile('mytext.zip', 'w', compression=zipfile.ZIP_LZMA, compresslevel=9) as myzip:
+    (... 생략 ...)
+```
+
+compression에는 4가지 종류가 있다.  
+
+- ZIP_STORED -> 압축하지 않고 파일을 Zip으로만 묶는다. 속도가 빠르다.
+- ZIP_DEFLATED -> 일반적인 ZIP압축으로 속도가 빠르고 압축률은 낮다.(호환성이 좋다.)
+- ZIP_BZIP2 -> bzip2 압축으로 압축률이 높고 속도가 느리다.
+- ZIP_LZMA -> lzma 압축으로 압축률이 높고 속도가 느리다. (7zip과 동일한 알고리즘으로 알려져 있다.)
+
+compressionlevel은 압축 수준을 의미하는 숫자값으로 1 ~ 9를 사용한다. 1은 속도가 가장 빠르고 압축률이 낮고, 9는  
+속도가 가장 느리지만 최대 압축을 한다.  
+
